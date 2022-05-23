@@ -153,7 +153,9 @@ if [ $DE = 2 ]; then
 
 pacman -S cinnamon network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
 
-systemctl enable lightdm
+systemctl enable lightdm NetworkManager
+
+fi
 
 
 
@@ -161,7 +163,9 @@ if [ $DE = 4 ]; then
 
 pacman -S gnome gnome-tweaks network-manager-applet gdm --noconfirm
 
-systemctl enable gdm
+systemctl enable gdm NetworkManager
+
+fi
 
 
 
@@ -169,24 +173,28 @@ if [ $DE = 6 ]; then
 
 pacman -S plasma konsole sddm dolphin spectacle kcalc plasma-nm plasma-pa --noconfirm
 
-systemctl enable sddm
+systemctl enable sddm NetworkManager
+
+fi
 
 
 
-elif [ $DE = 7 ]; then
+if [ $DE = 7 ]; then
 
 pacman -S plasma konsole sddm dolphin spectacle kcalc plasma-nm plasma-pa plasma-wayland-session --noconfirm
 
 
-systemctl enable sddm
+systemctl enable sddm NetworkManager
+
+fi
 
 
 
-elif [ $DE = 11 ]; then
+if [ $DE = 11 ]; then
 
 pacman -S xfce4 xfce4-screenshooter xfce4-pulseaudio-plugin xfce4-whiskermenu-plugin ristretto mousepad galculator thunar-archive-plugin network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
 
-systemctl enable lightdm
+systemctl enable lightdm NetworkManager
 
 fi
 
@@ -197,15 +205,5 @@ xdg-user-dirs-update
 
 
 
-###SYSTEMCTL
-
-###VARIÁVEIS DOS DM'S
-
-XFCEDM="lightdm"
-CINNAMONDM="lightdm"
-GNOMEDM="gdm"
-PLASMADM="sddm"
-
-systemctl enable NetworkManager
 
 exit
