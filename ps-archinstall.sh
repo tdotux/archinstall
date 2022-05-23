@@ -149,7 +149,7 @@ read -p "Digite o Nº Correspondente à Interface Gráfica : " DE
 echo -e "$(tput sgr0)\n\n"
 
 if [ $DE = 1 ]; then
-pacman -S budgie-desktop gnome-terminal network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
+pacman -S budgie-desktop gnome-terminal gedit gnome-calculator gnome-calendar nautilis network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm NetworkManager
 fi
 
@@ -177,7 +177,7 @@ fi
 
 
 if [ $DE = 5 ]; then
-pacman -S gnome-flashback gnome-tweaks network-manager-applet gdm --noconfirm
+pacman -S gnome-flashback gnome-tweaks gnome-terminal nautilus network-manager-applet gdm --noconfirm
 systemctl enable gdm NetworkManager
 fi
 
@@ -203,14 +203,14 @@ fi
 
 
 if [ $DE = 9 ]; then
-pacman -S lxqt network-manager-applet --noconfirm
+pacman -S lxqt network-manager-applet sddm --noconfirm
 systemctl enable sddm NetworkManager
 fi
 
 
 
 if [ $DE = 10 ]; then
-pacman -S mate network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
+pacman -S mate mate-extra network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm NetworkManager
 fi
 
