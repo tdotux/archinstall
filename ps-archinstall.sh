@@ -148,6 +148,12 @@ read -p "Digite o Nº Correspondente à Interface Gráfica : " DE
 
 echo -e "$(tput sgr0)\n\n"
 
+if [ $DE = 1 ]; then
+pacman -S budgie-desktop network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
+systemctl enable lightdm NetworkManager
+fi
+
+
 
 if [ $DE = 2 ]; then
 pacman -S cinnamon network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
@@ -156,8 +162,22 @@ fi
 
 
 
+if [ $DE = 3 ]; then
+pacman -S deepin network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
+systemctl enable lightdm NetworkManager
+fi
+
+
+
 if [ $DE = 4 ]; then
 pacman -S gnome gnome-tweaks network-manager-applet gdm --noconfirm
+systemctl enable gdm NetworkManager
+fi
+
+
+
+if [ $DE = 5 ]; then
+pacman -S gnome-flashback gnome-tweaks network-manager-applet gdm --noconfirm
 systemctl enable gdm NetworkManager
 fi
 
@@ -173,6 +193,25 @@ fi
 if [ $DE = 7 ]; then
 pacman -S plasma konsole sddm dolphin spectacle kcalc plasma-nm plasma-pa plasma-wayland-session --noconfirm
 systemctl enable sddm NetworkManager
+fi
+
+
+if [ $DE = 8 ]; then
+pacman -S lxde-gtk3 network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
+systemctl enable lightdm NetworkManager
+fi
+
+
+if [ $DE = 9 ]; then
+pacman -S lxqt network-manager-applet --noconfirm
+systemctl enable sddm NetworkManager
+fi
+
+
+
+if [ $DE = 10 ]; then
+pacman -S mate network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
+systemctl enable lightdm NetworkManager
 fi
 
 
