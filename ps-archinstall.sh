@@ -1,6 +1,12 @@
 #!/bin/bash
 
 
+###AJUSTAR HORA AUTOMATICAMENTE
+
+timedatectl set-ntp true
+
+
+
 ###UTILITARIOS BASICOS
 
 pacman -Sy nano pacman-contrib reflector sudo grub efibootmgr --noconfirm
