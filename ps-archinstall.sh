@@ -149,7 +149,7 @@ read -p "Digite o Nº Correspondente à Interface Gráfica : " DE
 echo -e "$(tput sgr0)\n\n"
 
 if [ $DE = 1 ]; then
-pacman -S budgie-desktop network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
+pacman -S budgie-desktop gnome-terminal network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm NetworkManager
 fi
 
