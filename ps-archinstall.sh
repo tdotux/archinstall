@@ -130,10 +130,65 @@ fi
 
 
 
-###PACOTES
+###PACOTES PADRÃO
 
-pacman -S xorg-server xorg-xinit xterm linux-zen-headers networkmanager network-manager-applet xfce4 xfce4-screenshooter xfce4-pulseaudio-plugin xfce4-whiskermenu-plugin ristretto mousepad galculator xarchiver file-roller tar gzip bzip2 zip unzip unrar p7zip thunar-archive-plugin lightdm lightdm-gtk-greeter pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber xdg-user-dirs --noconfirm
+pacman -S xorg-server xorg-xinit xterm linux-zen-headers networkmanager xarchiver tar gzip bzip2 zip unzip unrar p7zip xfce4 pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber xdg-user-dirs gnome-disk-utility  --noconfirm
 
+
+###INTERFACE GRÁFICA
+
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n#### INTERFACE GRÁFICA (DE) ####"
+
+
+echo -e "\n1  - Budgie\n2  - Cinnamon\n3  - Deepin\n4  - GNOME\n5  - GNOME Flashback\n6  - KDE Plasma (X11)\n7  - KDE Plasma (Wayland)\n8  - LXDE\n9  - LXQt\n10 - MATE\n11 - XFCE\n"
+
+
+read -p "Digite o Nº Correspondente à Interface Gráfica : " DE
+
+
+echo -e "$(tput sgr0)\n\n"
+
+
+if [ $DE = 2 ]; then
+
+pacman -S cinnamon network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
+
+systemctl enable lightdm
+
+
+
+if [ $DE = 4 ]; then
+
+pacman -S gnome gnome-tweaks network-manager-applet gdm --noconfirm
+
+systemctl enable gdm
+
+
+
+if [ $DE = 6 ]; then
+
+pacman -S plasma konsole sddm dolphin spectacle kcalc plasma-nm plasma-pa --noconfirm
+
+systemctl enable sddm
+
+
+
+elif [ $DE = 7 ]; then
+
+pacman -S plasma konsole sddm dolphin spectacle kcalc plasma-nm plasma-pa plasma-wayland-session --noconfirm
+
+
+systemctl enable sddm
+
+
+
+elif [ $DE = 11 ]; then
+
+pacman -S xfce4 xfce4-screenshooter xfce4-pulseaudio-plugin xfce4-whiskermenu-plugin ristretto mousepad galculator thunar-archive-plugin network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
+
+systemctl enable lightdm
+
+fi
 
 
 ###USER DIRS UPDATE
@@ -144,7 +199,13 @@ xdg-user-dirs-update
 
 ###SYSTEMCTL
 
-systemctl enable NetworkManager lightdm
+###VARIÁVEIS DOS DM'S
 
+XFCEDM="lightdm"
+CINNAMONDM="lightdm"
+GNOMEDM="gdm"
+PLASMADM="sddm"
+
+systemctl enable NetworkManager
 
 exit
