@@ -132,7 +132,7 @@ fi
 
 ###PACOTES PADRÃO
 
-pacman -S xorg-server xorg-xinit xterm linux-zen-headers networkmanager xarchiver tar gzip bzip2 zip unzip unrar p7zip xfce4 pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber xdg-user-dirs gnome-disk-utility  --noconfirm
+pacman -S xorg-server xorg-xinit xterm linux-zen-headers networkmanager xarchiver tar gzip bzip2 zip unzip unrar p7zip pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber xdg-user-dirs gnome-disk-utility  --noconfirm
 
 
 ###INTERFACE GRÁFICA
@@ -150,60 +150,43 @@ echo -e "$(tput sgr0)\n\n"
 
 
 if [ $DE = 2 ]; then
-
 pacman -S cinnamon network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
-
 systemctl enable lightdm NetworkManager
-
 fi
 
 
 
 if [ $DE = 4 ]; then
-
 pacman -S gnome gnome-tweaks network-manager-applet gdm --noconfirm
-
 systemctl enable gdm NetworkManager
-
 fi
 
 
 
 if [ $DE = 6 ]; then
-
 pacman -S plasma konsole sddm dolphin spectacle kcalc plasma-nm plasma-pa --noconfirm
-
 systemctl enable sddm NetworkManager
-
 fi
 
 
 
 if [ $DE = 7 ]; then
-
 pacman -S plasma konsole sddm dolphin spectacle kcalc plasma-nm plasma-pa plasma-wayland-session --noconfirm
-
-
 systemctl enable sddm NetworkManager
-
 fi
 
 
 
 if [ $DE = 11 ]; then
-
 pacman -S xfce4 xfce4-screenshooter xfce4-pulseaudio-plugin xfce4-whiskermenu-plugin ristretto mousepad galculator thunar-archive-plugin network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
-
 systemctl enable lightdm NetworkManager
-
 fi
+
 
 
 ###USER DIRS UPDATE
 
 xdg-user-dirs-update
-
-
 
 
 exit
