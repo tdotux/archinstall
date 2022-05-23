@@ -156,7 +156,7 @@ read -p "Digite o Nº Correspondente à Interface Gráfica : " DE
 echo -e "$(tput sgr0)\n\n"
 
 if [ $DE = 1 ]; then
-pacman -S budgie-desktop gnome-terminal gedit gnome-calculator gnome-calendar nautilis network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
+pacman -S budgie-desktop gnome-terminal gedit gnome-calculator gnome-calendar gnome-system-monitor nautilis network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm NetworkManager
 fi
 
@@ -184,7 +184,7 @@ fi
 
 
 if [ $DE = 5 ]; then
-pacman -S gnome-flashback gnome-tweaks gnome-terminal nautilus network-manager-applet gdm --noconfirm
+pacman -S gnome-flashback gnome-tweaks gnome-terminal gnome-system-monitor nautilus network-manager-applet gdm --noconfirm
 systemctl enable gdm NetworkManager
 fi
 
@@ -204,13 +204,13 @@ fi
 
 
 if [ $DE = 8 ]; then
-pacman -S lxde-gtk3 network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
+pacman -S lxde-gtk3 lxtask network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm NetworkManager
 fi
 
 
 if [ $DE = 9 ]; then
-pacman -S lxqt network-manager-applet sddm --noconfirm
+pacman -S lxqt lxtask network-manager-applet sddm --noconfirm
 systemctl enable sddm NetworkManager
 fi
 
@@ -224,7 +224,7 @@ fi
 
 
 if [ $DE = 11 ]; then
-pacman -S xfce4 xfce4-screenshooter xfce4-pulseaudio-plugin xfce4-whiskermenu-plugin ristretto mousepad galculator thunar-archive-plugin network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
+pacman -S xfce4 xfce4-screenshooter xfce4-pulseaudio-plugin xfce4-whiskermenu-plugin lxtask ristretto mousepad galculator thunar-archive-plugin network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm NetworkManager
 fi
 
