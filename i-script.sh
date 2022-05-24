@@ -4,13 +4,13 @@ timedatectl set-ntp true
 
 pacman -S e2fsprogs dosfstools nano wget --noconfirm
 
-parted /dev/sda mklabel gpt
+parted /dev/sda mklabel gpt -s
 
-parted /dev/sda mkpart primary fat32 1MiB 301MiB
+parted /dev/sda mkpart primary fat32 1MiB 301MiB -s
 
 parted /dev/sda set 1 esp on
 
-parted /dev/sda mkpart primary btrfs 301MiB 100%
+parted /dev/sda mkpart primary btrfs 301MiB 100% -s
 
 mkfs.fat -F32 /dev/sda1
 
