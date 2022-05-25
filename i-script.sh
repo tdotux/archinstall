@@ -1,12 +1,19 @@
 #!/bin/bash
 
+
+###SINCRONIZAR RELOGIO COM A INTERNET
+
 timedatectl set-ntp true
 
 
 
+###UTILITARIOS BASICOS
+
 pacman -S e2fsprogs dosfstools nano wget --noconfirm
 
 
+
+###DETECTAR UEFI OU LEGACY
 
 PASTA_EFI=/sys/firmware/efi
 if [ ! -d "$PASTA_EFI" ];then
@@ -34,25 +41,37 @@ fi
 
 
 
+###PACSTRAP
+
 pacstrap /mnt base e2fsprogs linux-zen linux-firmware
 
 
+
+###FSTAB
 
 genfstab -U /mnt > /mnt/etc/fstab
 
 
 
+###SINCRONIZAR REPOSITORIOS DENTRO DO CHROOT
+
 arch-chroot /mnt pacman -Syy git --noconfirm
 
 
+
+###CLONAR O REPOSITORIO DENTRO DO CHROOT
 
 arch-chroot /mnt git clone http://github.com/tdotux/archscript
 
 
 
+###EXECUTAR O SCRIPT DE POS INSTALAÇÃO DENTRO DO CHROOT
+
 arch-chroot /mnt sh /archscript/pi-script.sh
 
 
+
+###REINICIAR EM 5 SEGUNDOS
 
 echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n\nREINICIANDO EM"
 sleep 1
