@@ -14,7 +14,7 @@ echo -e "Sistema Legacy"
 parted /dev/sda mklabel msdos -s
 parted /dev/sda mkpart primary ext4 1MiB 100% -s
 parted /dev/sda set 1 boot on
-mkfs.ext4 /dev/sda1
+mkfs.ext4 -F /dev/sda1
 mount /dev/sda1 /mnt
 
 
@@ -25,7 +25,7 @@ parted /dev/sda mkpart primary fat32 1MiB 301MiB -s
 parted /dev/sda set 1 esp on
 parted /dev/sda mkpart primary ext4 301MiB 100% -s
 mkfs.fat -F32 /dev/sda1
-mkfs.ext4 /dev/sda2
+mkfs.ext4 -F /dev/sda2
 mount /dev/sda2 /mnt
 mkdir /mnt/boot/
 mkdir /mnt/boot/efi
