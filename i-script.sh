@@ -39,3 +39,5 @@ genfstab -U /mnt > /mnt/etc/fstab
 arch-chroot /mnt git clone http://github.com/tdotux/archscript
 
 arch-chroot /mnt sh /archscript/pi-script.sh
+
+reboot
