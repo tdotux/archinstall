@@ -240,5 +240,5 @@ fi
 
 xdg-user-dirs-update
 
-echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n####INSTALAÇÃO CONCLUÍDA!!!\nREINICIE SEU PC COM O COMANDO reboot\n"
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n####INSTALAÇÃO CONCLUÍDA!!!\n\nREINICIE SEU PC COM O COMANDO reboot\n\n"
 
