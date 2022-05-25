@@ -16,16 +16,7 @@ pacman -S e2fsprogs dosfstools nano wget --noconfirm
 ###DETECTAR UEFI OU LEGACY
 
 PASTA_EFI=/sys/firmware/efi
-if [ ! -d "$PASTA_EFI" ];then
-echo -e "Sistema Legacy"
-parted /dev/sda mklabel msdos -s
-parted /dev/sda mkpart primary ext4 1MiB 100% -s
-parted /dev/sda set 1 boot on
-mkfs.ext4 -F /dev/sda1
-mount /dev/sda1 /mnt
-
-
-else
+if [ -d "$PASTA_EFI" ];then
 echo -e "Sistema EFI"
 parted /dev/sda mklabel gpt -s
 parted /dev/sda mkpart primary fat32 1MiB 301MiB -s
@@ -38,6 +29,16 @@ mkdir /mnt/boot/
 mkdir /mnt/boot/efi
 mount /dev/sda1 /mnt/boot/efi
 fi
+
+
+
+else
+echo -e "Sistema Legacy"
+parted /dev/sda mklabel msdos -s
+parted /dev/sda mkpart primary ext4 1MiB 100% -s
+parted /dev/sda set 1 boot on
+mkfs.ext4 -F /dev/sda1
+mount /dev/sda1 /mnt
 
 
 
