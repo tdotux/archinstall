@@ -57,8 +57,6 @@ echo -e "$(tput sgr0)\n\n"
 
 echo -e "127.0.0.1 localhost.localdomain localhost\n::1 localhost.localdomain localhost\n127.0.1.1 $HOST.localdomain $HOST" | sudo tee /etc/hosts
 
-echo -e "$(tput sgr0)\n\n"
-
 
 
 ###SENHA ROOT
