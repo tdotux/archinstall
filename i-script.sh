@@ -40,7 +40,9 @@ arch-chroot /mnt git clone http://github.com/tdotux/archscript
 
 arch-chroot /mnt sh /archscript/pi-script.sh
 
-echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n\nReiniciando em 5"
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n\nREINICIANDO"
+sleep 2
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n\n5"
 sleep 1
 echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n\n4"
 sleep 1
