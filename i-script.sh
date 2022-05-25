@@ -4,13 +4,19 @@ echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n\nTIMEDADECTL"
 
 sleep 2
 
+echo -e "$(tput sgr0)\n\n"
+
 timedatectl set-ntp true
 
 echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n\nUTILITARIOS"
 
 sleep 2
 
+echo -e "$(tput sgr0)\n\n"
+
 pacman -S e2fsprogs dosfstools nano wget --noconfirm
+
+echo -e "$(tput sgr0)\n\n"
 
 
 echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n\nTIPO DE SISTEMA"
@@ -45,11 +51,14 @@ echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n\nPACSTRAP"
 
 sleep 2
 
+echo -e "$(tput sgr0)\n\n"
+
 pacstrap /mnt base e2fsprogs linux-zen linux-firmware
 
 
 echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n\nFSTAB"
 
+echo -e "$(tput sgr0)\n\n"
 
 genfstab -U /mnt > /mnt/etc/fstab
 
@@ -58,11 +67,28 @@ echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n\nARCH-CHROOT GI
 
 sleep 3
 
+echo -e "$(tput sgr0)\n\n"
+
+
+
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n\nARCH-CHROOT PACMAN"
+
+sleep 3
+
+arch-chroot /mnt pacman -Syy git --noconfirm
+
+
+
 arch-chroot /mnt git clone http://github.com/tdotux/archscript
+
+
 
 echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n\nARCH-CHROOT EXEC SCRIPT"
 
 sleep 3
+
+echo -e "$(tput sgr0)\n\n"
+
 
 arch-chroot /mnt sh /archscript/pi-script.sh
 
