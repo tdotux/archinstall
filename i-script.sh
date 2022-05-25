@@ -28,7 +28,6 @@ mount /dev/sda2 /mnt
 mkdir /mnt/boot/
 mkdir /mnt/boot/efi
 mount /dev/sda1 /mnt/boot/efi
-fi
 
 
 
@@ -39,6 +38,7 @@ parted /dev/sda mkpart primary ext4 1MiB 100% -s
 parted /dev/sda set 1 boot on
 mkfs.ext4 -F /dev/sda1
 mount /dev/sda1 /mnt
+fi
 
 
 
