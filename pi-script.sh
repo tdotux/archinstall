@@ -199,14 +199,14 @@ fi
 
 
 if [ $DE = 6 ]; then
-pacman -S plasma konsole sddm dolphin spectacle kcalc plasma-nm plasma-pa --noconfirm
+pacman -S plasma konsole sddm dolphin spectacle kcalc gwenview plasma-nm plasma-pa --noconfirm
 systemctl enable sddm NetworkManager
 fi
 
 
 
 if [ $DE = 7 ]; then
-pacman -S plasma konsole sddm dolphin spectacle kcalc plasma-nm plasma-pa plasma-wayland-session --noconfirm
+pacman -S plasma konsole sddm dolphin spectacle kcalc gwenview plasma-nm plasma-pa plasma-wayland-session --noconfirm
 systemctl enable sddm NetworkManager
 fi
 
