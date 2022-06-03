@@ -51,8 +51,8 @@ case $ARQUIVOS in
 
 "1")
 echo "Ext4"
-sleep 2
 echo -e "$(tput sgr0)\n\n"
+sleep 2
 parted /dev/sda mkpart primary fat32 1MiB 301MiB -s
 parted /dev/sda set 1 esp on
 parted /dev/sda mkpart primary ext4 301MiB 100% -s
@@ -67,8 +67,8 @@ mount /dev/sda1 /mnt/boot/efi
 
 "2")
 echo "Btrfs"
-sleep 2
 echo -e "$(tput sgr0)\n\n"
+sleep 2
 pacman -S btrfs-progs --noconfirm
 parted /dev/sda mkpart primary fat32 1MiB 301MiB -s
 parted /dev/sda set 1 esp on
@@ -84,8 +84,8 @@ mount /dev/sda1 /mnt/boot/efi
 
 "3")
 echo "F2FS"
-sleep 2
 echo -e "$(tput sgr0)\n\n"
+sleep 2
 pacman -S f2fs-tools --noconfirm
 parted /dev/sda mkpart primary fat32 1MiB 301MiB -s
 parted /dev/sda set 1 esp on
