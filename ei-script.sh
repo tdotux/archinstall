@@ -25,7 +25,7 @@ echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)"
 
 echo -e "#### Sistema de Arquivos ####"
 
-echo -e "\n"
+echo -e "\n\n"
 
 echo -e "1 - Ext4"
 
@@ -41,7 +41,7 @@ echo -e "\n"
 
 echo -e "4 - XFS"
 
-echo -e "\n"
+echo -e "\n\n"
 
 echo -ne "Escolha um Sistema de Arquivos : "
 
@@ -51,8 +51,8 @@ case $ARQUIVOS in
 
 "1")
 echo "Ext4"
-echo -e "$(tput sgr0)\n\n"
 sleep 2
+echo -e "$(tput sgr0)\n\n"
 parted /dev/sda mkpart primary fat32 1MiB 301MiB -s
 parted /dev/sda set 1 esp on
 parted /dev/sda mkpart primary ext4 301MiB 100% -s
@@ -67,8 +67,8 @@ mount /dev/sda1 /mnt/boot/efi
 
 "2")
 echo "Btrfs"
-echo -e "$(tput sgr0)\n\n"
 sleep 2
+echo -e "$(tput sgr0)\n\n"
 pacman -S btrfs-progs --noconfirm
 parted /dev/sda mkpart primary fat32 1MiB 301MiB -s
 parted /dev/sda set 1 esp on
@@ -84,8 +84,8 @@ mount /dev/sda1 /mnt/boot/efi
 
 "3")
 echo "F2FS"
-echo -e "$(tput sgr0)\n\n"
 sleep 2
+echo -e "$(tput sgr0)\n\n"
 pacman -S f2fs-tools --noconfirm
 parted /dev/sda mkpart primary fat32 1MiB 301MiB -s
 parted /dev/sda set 1 esp on
@@ -126,7 +126,7 @@ echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)"
 
 echo -e "#### Sistema de Arquivos ####"
 
-echo -e "\n"
+echo -e "\n\n"
 
 echo -e "1 - Ext4"
 
@@ -142,7 +142,7 @@ echo -e "\n"
 
 echo -e "4 - XFS"
 
-echo -e "\n"
+echo -e "\n\n"
 
 echo -ne "Escolha um Sistema de Arquivos : "
 
@@ -243,13 +243,13 @@ arch-chroot /mnt pacman -Syy git --noconfirm
 
 ###CLONAR O REPOSITORIO DENTRO DO CHROOT
 
-arch-chroot /mnt git clone http://github.com/tdotux/tests
+arch-chroot /mnt git clone http://github.com/tdotux/archscript
 
 
 
 ###EXECUTAR O SCRIPT DE POS INSTALAÇÃO DENTRO DO CHROOT
 
-arch-chroot /mnt sh /tests/epi-script.sh
+arch-chroot /mnt sh /archscript/epi-script.sh
 
 
 
