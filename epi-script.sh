@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env sh
 
 
 ###AJUSTAR HORA AUTOMATICAMENTE
@@ -9,7 +9,7 @@ timedatectl set-ntp true
 
 ###UTILITARIOS BASICOS
 
-pacman -Sy nano pacman-contrib reflector sudo grub --noconfirm
+pacman -Sy nano wget pacman-contrib reflector sudo grub --noconfirm
 
 
 
@@ -45,12 +45,17 @@ mv /etc/locale.gen /etc/locale.gen.bak && echo -e 'pt_BR.UTF-8 UTF-8' | tee /etc
 
 ###HOSTNAME
 
-echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\nHOSTNAME\n"
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)"
+
+echo -e "### Hostname ###"
+
+echo -e "\n"
 
 read -p "Digite o Hostname : " HOST
+
 echo "$HOST" | sudo tee /etc/hostname
 
-echo -e "$(tput sgr0)\n\n"
+echo -e "$(tput sgr0)"
 
 
 
@@ -60,39 +65,51 @@ echo -e "127.0.0.1 localhost.localdomain localhost\n::1 localhost.localdomain lo
 
 
 
-###SENHA ROOT
-
-echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\nSENHA DE ROOT\n"
-
-echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\nDigite a Senha de Root\n"
-
-passwd
-
-echo -e "$(tput sgr0)\n\n"
-
-
-
 ###USERNAME
 
-echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\nUSERNAME\n"
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)"
+
+echo -e "Nome de Usuário (Username)"
+
+echo -e "\n"
 
 read -p "Digite o Nome de Usuário : " USERNAME
 
 useradd -m $USERNAME
 
-echo -e "$(tput sgr0)\n\n"
+echo -e "$(tput sgr0)"
 
 
 
 ###SENHA DO USUARIO
 
-echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\nSENHA DO USUARIO\n"
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)"
 
-echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\nDigite a Senha do Usuário\n"
+echo -e "Senha do Usuário"
+
+echo -e "\n"
+
+echo -e "Digite a Senha do Usuário"
 
 passwd $USERNAME
 
 echo -e "$(tput sgr0)\n\n"
+
+
+
+###SENHA ROOT
+
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)"
+
+echo -e "### Senha de Root ###"
+
+echo -e "\n"
+
+echo -e "Digite a Senha de Root"
+
+passwd
+
+echo -e "$(tput sgr0)"
 
 
 
@@ -128,113 +145,330 @@ fi
 
 ###DRIVER DE VIDEO
 
-if [  $(lspci | grep -c Radeon) = 1 ]; then
-pacman -S xf86-video-amdgpu xf86-video-ati --noconfirm
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)"
 
-elif [  $(lspci | grep -c Intel) = 1 ]; then
+echo -e "#### DRIVER DE VIDEO PRIMARIO ####"
+
+echo -e "\n"
+
+echo -e "1 - AMDGPU"
+
+echo -e "2 - ATI"
+
+echo -e "3 - Intel"
+
+echo -e "4 - Nouveau (Nvidia Open Source)"
+
+echo -e "5 - Nvidia (Proprietário)"
+
+echo -e "6 - VMWARE"
+
+echo -e "\n"
+
+echo -ne "Escolha um Driver Primário : "
+
+read -n1 -s PDRIVER
+
+case $PDRIVER in
+
+"1")
+
+echo "AMDGPU"
+sleep 2
+echo -e "$(tput sgr0)\n\n"
+pacman -S xf86-video-amdgpu --noconfirm
+
+;;
+
+"2")
+
+echo "ATI"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
+pacman -S xf86-video-ati --noconfirm
+
+;;
+
+
+"3")
+
+echo "INTEL"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
 pacman -S xf86-video-intel --noconfirm
 
-elif [  $(lspci | grep -c GeForce) = 1 ]; then
+;;
+
+"4")
+
+echo "Nouveau"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
 pacman -S xf86-video-nouveau --noconfirm
 
-elif [  $(lspci | grep -c VMware) = 1 ]; then
-pacman -S xf86-video-vmware xf86-input-vmmouse --noconfirm
+;;
 
-fi
+"5")
+
+echo "Nvidia"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
+pacman -S xf86-video-nvidia --noconfirm
+
+;;
+
+"6")
+
+echo "VMWARE"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
+pacman -S xf86-video-vmware --noconfirm
+
+esac
+
+echo -e "$(tput sgr0)\n\n"
+
+
+
+### DRIVER DE VIDEO SECUNDARIO ###
+
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)"
+
+echo -e "#### DRIVER DE VIDEO SECUNDARIO ####"
+
+echo -e "\n"
+
+echo -e "1 - AMDGPU"
+
+echo -e "2 - ATI"
+
+echo -e "3 - Intel"
+
+echo -e "4 - Nouveau (Nvidia Open Source)"
+
+echo -e "5 - Nvidia (Proprietário)"
+
+echo -e "\n\n"
+
+echo -e "Pressione Enter para pular esta etapa"
+
+echo -e "\n"
+
+echo -ne "Escolha um Driver Secundário : "
+
+read -n1 -s SDRIVER
+
+case $SDRIVER in
+
+"1")
+
+echo "AMDGPU"
+sleep 2
+echo -e "$(tput sgr0)\n\n"
+pacman -S xf86-video-amdgpu --noconfirm
+
+;;
+
+"2")
+
+echo "ATI"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
+pacman -S xf86-video-ati --noconfirm
+
+;;
+
+
+"3")
+
+echo "INTEL"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
+pacman -S xf86-video-intel --noconfirm
+
+;;
+
+"4")
+
+echo "Nouveau"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
+pacman -S xf86-video-nouveau --noconfirm
+
+;;
+
+"5")
+
+echo "Nvidia"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
+pacman -S xf86-video-nvidia --noconfirm
+
+esac
+
+echo -e "$(tput sgr0)\n\n"
 
 
 
 ###PACOTES PADRÃO
 
-pacman -S xorg-server xorg-xinit xterm linux-zen-headers networkmanager xarchiver tar gzip bzip2 zip unzip unrar p7zip pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber xdg-user-dirs gnome-disk-utility neofetch --noconfirm
+pacman -S xorg-server xorg-xinit xterm linux-zen-headers networkmanager tar gzip bzip2 zip unzip unrar p7zip pipewire pipewire-alsa pipewire-jack pipewire-pulse wireplumber xdg-user-dirs gnome-disk-utility neofetch --noconfirm
 
 
 
 ###INTERFACE GRÁFICA
 
-echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n#### INTERFACE GRAFICA (DE) ####"
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)"
 
+echo -e "#### INTERFACE GRAFICA (DE) ####"
 
-echo -e "\n1  - Budgie\n2  - Cinnamon\n3  - Deepin\n4  - GNOME\n5  - GNOME Flashback\n6  - KDE Plasma (X11)\n7  - KDE Plasma (Wayland)\n8  - LXDE\n9  - LXQt\n10 - MATE\n11 - XFCE\n"
+echo -e "\n"
 
+echo -e "1 - Budgie"
 
-read -p "Digite o Nº Correspondente à Interface Gráfica : " DE
+echo -e "2 - Cinnamon"
 
+echo -e "3 - Deepin"
 
+echo -e "4 - GNOME"
+
+echo -e "5 - KDE Plasma (X11)"
+
+echo -e "6 - KDE Plasma (Wayland)"
+
+echo -e "7 - LXDE"
+
+echo -e "8 - LXQt"
+
+echo -e "9 - MATE"
+
+echo -e "0 - XFCE"
+
+echo -e "\n"
+
+echo -ne "Escolha uma DE : "
+read -n1 -s DE
+
+case $DE in
+
+"1")
+
+echo "Budge"
+sleep 2
 echo -e "$(tput sgr0)\n\n"
-
-if [ $DE = 1 ]; then
 pacman -S budgie-desktop gnome-terminal gedit gnome-calculator gnome-calendar gnome-system-monitor nautilus network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm NetworkManager
-fi
 
+;;
 
+"2")
 
-if [ $DE = 2 ]; then
+echo "Cinnamon"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
 pacman -S cinnamon network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm NetworkManager
-fi
 
+;;
 
+"3")
 
-if [ $DE = 3 ]; then
+echo "Deepin"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
 pacman -S deepin network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm NetworkManager
-fi
 
+;;
 
+"4")
 
-if [ $DE = 4 ]; then
+echo "Gnome"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
 pacman -S gnome gnome-tweaks network-manager-applet gdm --noconfirm
 systemctl enable gdm NetworkManager
-fi
 
+;;
 
+"5")
 
-if [ $DE = 5 ]; then
-pacman -S gnome-flashback gnome-tweaks gnome-terminal gnome-system-monitor nautilus network-manager-applet gdm --noconfirm
-systemctl enable gdm NetworkManager
-fi
+echo "KDE Plasma (X11)"
 
-
-
-if [ $DE = 6 ]; then
+sleep 2
+echo -e "$(tput sgr0)\n\n"
 pacman -S plasma konsole sddm dolphin spectacle kcalc kwrite gwenview plasma-nm plasma-pa --noconfirm
 systemctl enable sddm NetworkManager
-fi
 
+;;
 
+"6")
 
-if [ $DE = 7 ]; then
+echo "KDE Plasma (Wayland)"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
 pacman -S plasma konsole sddm dolphin spectacle kcalc kwrite gwenview plasma-nm plasma-pa plasma-wayland-session --noconfirm
 systemctl enable sddm NetworkManager
-fi
 
+;;
 
-if [ $DE = 8 ]; then
+"7")
+
+echo "LXDE"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
 pacman -S lxde-gtk3 lxtask network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm NetworkManager
-fi
 
+;;
 
-if [ $DE = 9 ]; then
+"8")
+
+echo "LXQT"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
 pacman -S lxqt lxtask network-manager-applet sddm --noconfirm
 systemctl enable sddm NetworkManager
-fi
 
+;;
 
+"9")
 
-if [ $DE = 10 ]; then
+echo "MATE"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
 pacman -S mate mate-extra network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm NetworkManager
-fi
 
+;;
 
+"0")
 
-if [ $DE = 11 ]; then
-pacman -S xfce4 xfce4-screenshooter xfce4-pulseaudio-plugin xfce4-whiskermenu-plugin lxtask ristretto mousepad galculator thunar-archive-plugin network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
+echo "XFCE"
+
+sleep 2
+echo -e "$(tput sgr0)\n\n"
+pacman -S xfce4 xfce4-screenshooter xfce4-pulseaudio-plugin xfce4-whiskermenu-plugin xarchiver lxtask ristretto mousepad galculator thunar-archive-plugin network-manager-applet lightdm lightdm-gtk-greeter --noconfirm
 systemctl enable lightdm NetworkManager
-fi
+
+esac
+
 
 echo -e "$(tput sgr0)\n\n"
 
@@ -248,8 +482,99 @@ xdg-user-dirs-update
 
 ###SWAP FILE
 
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)"
+
+echo -e "Swap"
+
+echo -e "\n"
+
+echo -e "Escolha o Tamanho do Arquivo de Swap"
+
+echo -e "\n"
+
+echo -e "Para Máquinas Até 8GB de RAM = 4GB DE SWAP"
+
+echo -e "\n"
+
+echo -e "Acima de 8GB de RAM = 2GB DE SWAP"
+
+echo -e "\n"
+
+echo -e "Digite o Número Correspondente a Quantidade de Swap"
+
+echo -e "\n\n"
+
+echo -e "2 - 2GB"
+
+echo -e "\n"
+
+echo -e "4 - 4GB"
+
+echo -e "\n\n"
+
+echo -ne "Escolha uma quantidade de SWAP : "
+
+read -n1 -s SWAP
+
+case $SWAP in
+
+"2")
+
+echo "2GB"
+sleep 2
+echo -e "$(tput sgr0)"
+
+fs=$(blkid -o value -s TYPE /dev/sda2)
+
+if [ "$fs" = "ext4" ];then
+
+fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && cp /etc/fstab /etc/fstab.bak && echo -e '/swapfile   none    swap    sw    0   0' | tee -a /etc/fstab
+
+elif [ "$fs" = "btrfs" ];then
+
+truncate -s 0 /swapfile && chattr +C /swapfile && btrfs property set /swapfile compression "" && fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && echo -e '/swapfile none swap defaults 0 0\n' | tee -a /etc/fstab
+
+elif [ "$fs" = "f2fs" ];then
+
+fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && cp /etc/fstab /etc/fstab.bak && echo -e '/swapfile   none    swap    sw    0   0' | tee -a /etc/fstab
+
+elif [ "$fs" = "xfs" ];then
+
+fallocate -l 2G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && cp /etc/fstab /etc/fstab.bak && echo -e '/swapfile   none    swap    sw    0   0' | tee -a /etc/fstab
+
+fi
+
+
+;;
+
+"4")
+
+echo "4GB"
+sleep 2
+echo -e "$(tput sgr0)"
+
+fs=$(blkid -o value -s TYPE /dev/sda2)
+
+if [ "$fs" = "ext4" ];then
+
 fallocate -l 4G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && cp /etc/fstab /etc/fstab.bak && echo -e '/swapfile   none    swap    sw    0   0' | tee -a /etc/fstab
 
+elif [ "$fs" = "btrfs" ];then
 
+truncate -s 0 /swapfile && chattr +C /swapfile && btrfs property set /swapfile compression "" && fallocate -l 4G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && echo -e '/swapfile none swap defaults 0 0\n' | tee -a /etc/fstab
 
-echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)\n####INSTALAÇÃO CONCLUÍDA!!!\n"
+elif [ "$fs" = "f2fs" ];then
+
+fallocate -l 4G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && cp /etc/fstab /etc/fstab.bak && echo -e '/swapfile   none    swap    sw    0   0' | tee -a /etc/fstab
+
+elif [ "$fs" = "xfs" ];then
+
+fallocate -l 4G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile && cp /etc/fstab /etc/fstab.bak && echo -e '/swapfile   none    swap    sw    0   0' | tee -a /etc/fstab
+
+fi
+
+esac
+
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)"
+
+echo -e "INSTALAÇÃO CONCLUÍDA!!!!!!"
