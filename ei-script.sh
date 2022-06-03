@@ -18,7 +18,9 @@ pacman -S dosfstools nano wget --noconfirm
 PASTA_EFI=/sys/firmware/efi
 
 if [ -d "$PASTA_EFI" ];then
+
 echo -e "Sistema EFI"
+
 parted /dev/sda mklabel gpt -s
 
 echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)"
@@ -52,7 +54,7 @@ case $ARQUIVOS in
 "1")
 echo "Ext4"
 sleep 2
-echo -e "$(tput sgr0)\n\n"
+echo -e "$(tput sgr0)"
 parted /dev/sda mkpart primary fat32 1MiB 301MiB -s
 parted /dev/sda set 1 esp on
 parted /dev/sda mkpart primary ext4 301MiB 100% -s
@@ -68,8 +70,7 @@ mount /dev/sda1 /mnt/boot/efi
 "2")
 echo "Btrfs"
 sleep 2
-echo -e "$(tput sgr0)\n\n"
-pacman -S btrfs-progs --noconfirm
+echo -e "$(tput sgr0)"
 parted /dev/sda mkpart primary fat32 1MiB 301MiB -s
 parted /dev/sda set 1 esp on
 parted /dev/sda mkpart primary btrfs 301MiB 100% -s
@@ -85,8 +86,7 @@ mount /dev/sda1 /mnt/boot/efi
 "3")
 echo "F2FS"
 sleep 2
-echo -e "$(tput sgr0)\n\n"
-pacman -S f2fs-tools --noconfirm
+echo -e "$(tput sgr0)"
 parted /dev/sda mkpart primary fat32 1MiB 301MiB -s
 parted /dev/sda set 1 esp on
 parted /dev/sda mkpart primary f2fs 301MiB 100% -s
@@ -102,8 +102,7 @@ mount /dev/sda1 /mnt/boot/efi
 "4")
 echo "XFS"
 sleep 2
-echo -e "$(tput sgr0)\n\n"
-pacman -S xfsprogs --noconfirm
+echo -e "$(tput sgr0)"
 parted /dev/sda mkpart primary fat32 1MiB 301MiB -s
 parted /dev/sda set 1 esp on
 parted /dev/sda mkpart primary btrfs 301MiB 100% -s
@@ -153,7 +152,7 @@ case $ARQUIVOS in
 "1")
 echo "Ext4"
 sleep 2
-echo -e "$(tput sgr0)\n\n"
+echo -e "$(tput sgr0)"
 parted /dev/sda mkpart primary ext4 1MiB 100% -s
 parted /dev/sda set 1 boot on
 mkfs.ext4 -F /dev/sda1
@@ -164,8 +163,7 @@ mount /dev/sda1 /mnt
 "2")
 echo "Btrfs"
 sleep 2
-echo -e "$(tput sgr0)\n\n"
-pacman -S btrfs-progs --noconfirm
+echo -e "$(tput sgr0)"
 parted /dev/sda mkpart primary btrfs 1MiB 100% -s
 parted /dev/sda set 1 boot on
 mkfs.btrfs -f /dev/sda1
@@ -176,8 +174,7 @@ mount /dev/sda1 /mnt
 "3")
 echo "F2FS"
 sleep 2
-echo -e "$(tput sgr0)\n\n"
-pacman -S f2fs-tools --noconfirm
+echo -e "$(tput sgr0)"
 parted /dev/sda mkpart primary f2fs 1MiB 100% -s
 parted /dev/sda set 1 boot on
 mkfs.f2fs -f /dev/sda1
@@ -188,8 +185,7 @@ mount /dev/sda1 /mnt
 "4")
 echo "XFS"
 sleep 2
-echo -e "$(tput sgr0)\n\n"
-pacman -S xfsprogs --noconfirm
+echo -e "$(tput sgr0)"
 parted /dev/sda mkpart primary xfs 1MiB 100% -s
 parted /dev/sda set 1 boot on
 mkfs.xfs -f /dev/sda1
@@ -199,34 +195,88 @@ esac
 
 fi
 
-echo -e "$(tput sgr0)\n\n"
+echo -e "$(tput sgr0)"
 
 
 
-###PACSTRAP
 
 
-if [  $( pacman -Q | grep -c 'e2fsprogs' ) = 1 ]; then
-pacstrap /mnt base e2fsprogs dosfstools linux-zen linux-firmware
-fi
+###PACSTRAP E KERNEL
+
+echo -e "$(tput bel)$(tput bold)$(tput setaf 7)$(tput setab 4)"
+
+echo -e "#### Kernel ####"
+
+echo -e "\n\n"
+
+echo -e "1 - Stable (Padrão)"
+
+echo -e "\n"
+
+echo -e "2 - Zen (Otimizado Para o Dia a Dia)"
+
+echo -e "\n"
+
+echo -e "3 - LTS (Suporte Longo)"
+
+echo -e "\n"
+
+echo -e "4 - Hardened (Focado em Segurança)"
+
+echo -e "\n\n"
+
+echo -ne "Escolha um Kernel : "
+
+read -n1 -s KERNEL
+
+case $KERNEL in
+
+"1")
+echo "Stable"
+sleep 2
+
+echo -e "$(tput sgr0)"
+
+pacstrap /mnt base btrfs-progs dosfstools e2fsprogs f2fs-tools dosfstools xfsprogs linux linux-firmware
+
+;;
+
+
+"2")
+echo "Zen"
+sleep 2
+
+echo -e "$(tput sgr0)"
+
+pacstrap /mnt base btrfs-progs dosfstools e2fsprogs f2fs-tools dosfstools xfsprogs linux-zen linux-firmware
+
+
+;;
+
+"3")
+echo "LTS"
+sleep 2
+
+echo -e "$(tput sgr0)"
+
+pacstrap /mnt base btrfs-progs dosfstools e2fsprogs f2fs-tools dosfstools xfsprogs linux-lts linux-firmware
+
+
+;;
+
+"4")
+echo "Hardened"
+sleep 2
+
+echo -e "$(tput sgr0)"
+
+pacstrap /mnt base btrfs-progs dosfstools e2fsprogs f2fs-tools dosfstools xfsprogs linux-hardened linux-firmware
+
+
+esac
 
 
 
-if [  $( pacman -Q | grep -c 'btrfs-progs' ) = 1 ]; then
-pacstrap /mnt base btrfs-progs dosfstools linux-zen linux-firmware
-fi
-
-
-
-if [  $( pacman -Q | grep -c 'f2fs-tools' ) = 1 ]; then
-pacstrap /mnt base f2fs-tools dosfstools linux-zen linux-firmware
-fi
-
-
-
-if [  $( pacman -Q | grep -c 'xfsprogs' ) = 1 ]; then
-pacstrap /mnt base xfsprogs dosfstools linux-zen linux-firmware
-fi
 
 
 ###FSTAB
